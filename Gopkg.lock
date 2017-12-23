@@ -8,6 +8,18 @@
   revision = "1e59b77b52bf8e4b449a57e6f79f21226d571845"
 
 [[projects]]
+  name = "github.com/improbable-eng/grpc-web"
+  packages = ["go/grpcweb"]
+  revision = "7174732598544bdecfa12fb81ca2f1601cf1b587"
+  version = "0.3.0-beta"
+
+[[projects]]
+  name = "github.com/rs/cors"
+  packages = ["."]
+  revision = "7af7a1e09ba336d2ea14b1ce73bf693c6837dbf6"
+  version = "v1.2"
+
+[[projects]]
   branch = "master"
   name = "golang.org/x/net"
   packages = ["context","http2","http2/hpack","idna","internal/timeseries","lex/httplex","trace"]
@@ -34,6 +46,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "fe7ebfe5d12e28ce1d3aa032fce9686ee6d080a7f21ca94584f08cd74a5028de"
+  inputs-digest = "cbbad2aded47773a5ea5c0df95e1134e4971c503efb0914527159f3b6061d6a0"
   solver-name = "gps-cdcl"
   solver-version = 1

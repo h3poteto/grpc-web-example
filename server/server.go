@@ -1,13 +1,14 @@
 package main
 
 import (
+	"fmt"
 	"log"
-	"net"
+	"net/http"
 	"os"
-	"os/signal"
 	"sync"
 
 	pb "github.com/h3poteto/grpc-web-example/protocol"
+	"github.com/improbable-eng/grpc-web/go/grpcweb"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 )
@@ -38,21 +39,22 @@ func (cs *customerService) AddPerson(c context.Context, p *pb.Person) (*pb.Respo
 
 func main() {
 	port := os.Getenv("SERVER_PORT")
-	lis, err := net.Listen("tcp", ":"+port)
-	if err != nil {
-		log.Fatalf("faild to listen: %v", err)
+
+	grpcServer := grpc.NewServer()
+	pb.RegisterCustomerServiceServer(grpcServer, new(customerService))
+
+	wrappedServer := grpcweb.WrapServer(grpcServer)
+	handler := func(resp http.ResponseWriter, req *http.Request) {
+		wrappedServer.ServeHttp(resp, req)
 	}
-	server := grpc.NewServer()
-	pb.RegisterCustomerServiceServer(server, new(customerService))
 
-	go func() {
-		log.Printf("start grpc server port: %s", port)
-		server.Serve(lis)
-	}()
+	httpServer := http.Server{
+		Addr:    fmt.Sprintf(":%s", port),
+		Handler: http.HandlerFunc(handler),
+	}
+	log.Printf("starting grpc server port: %s", port)
 
-	quit := make(chan os.Signal)
-	signal.Notify(quit, os.Interrupt)
-	<-quit
-	log.Println("stopping grpc server...")
-	server.GracefulStop()
+	if err := httpServer.ListenAndServe(); err != nil {
+		log.Fatalf("failed to start http server:%v", err)
+	}
 }
