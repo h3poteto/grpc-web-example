@@ -35,5 +35,4 @@ function ListPersonCall() {
   });
 }
 
-// ちゃんと動けば引数の文字列がダイアログに出てくる
 ListPersonCall();

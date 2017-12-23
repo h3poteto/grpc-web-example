@@ -1,6 +1,6 @@
 .PHONY: dep grpc-protobuf
 
-all: go-lib node-lib ruby-lib
+all: go-lib node-lib
 go-lib: dep grpc-protobuf
 	protoc -I. --proto_path=$(GOPATH)/src --proto_path=$(GOPATH)/src/github.com/gogo/protobuf/protobuf --proto_path=. --go_out=plugins=grpc:./ protocol/*.proto
 dep: Gopkg.toml
@@ -14,10 +14,6 @@ node-lib: npm
 	npm run build
 npm: package.json
 	npm install
-ruby-lib: bundle
-	cd client/ruby && protoc -I ../../protocol --proto_path=. --ruby_out=lib --grpc_out=lib --plugin=protoc-gen-grpc=$(shell cd client/ruby && bundle exec which grpc_tools_ruby_protoc_plugin) ../../protocol/*.proto
-bundle: client/ruby/Gemfile
-	cd client/ruby && bundle install --path vendor/bundle
 clean:
 	rm -rf node_modules
 	rm -rf client/ruby/vendor/bundle
