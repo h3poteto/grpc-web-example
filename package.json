@@ -1,0 +1,35 @@
+{
+  "name": "grpc-web-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "client/js/index.js",
+  "dependencies": {
+    "@types/google-protobuf": "^3.2.7",
+    "google-protobuf": "^3.5.0",
+    "grpc-web-client": "^0.3.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babelify": "^8.0.0",
+    "browserify": "^14.5.0",
+    "ts-protoc-gen": "^0.4.0"
+  },
+  "scripts": {
+    "build": "browserify client/js/index.js -t babelify --outfile client/js/bundle.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/h3poteto/grpc-web-example.git"
+  },
+  "author": "h3poteto",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/h3poteto/grpc-web-example/issues"
+  },
+  "homepage": "https://github.com/h3poteto/grpc-web-example#readme",
+  "babel": {
+    "presets": ["env"]
+  }
+}

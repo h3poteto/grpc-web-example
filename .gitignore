@@ -1,2 +1,5 @@
 vendor
+node_modules
 protocol/*.go
+protocol/*.js
+client/js/bundle.js
